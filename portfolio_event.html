@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gogung visit</title>
+    <link rel="stylesheet" type="text/css" href="./CSS/Reset.css">
+    <link rel="stylesheet" type="text/css" href="./CSS/portfolio.css">
+    <!--달력-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <!--달력 언어-->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+    <script>
+        //참고 사이트 https://nowonbun.tistory.com/368
+        document.addEventListener('DOMContentLoaded', function() {
+          const calendarEl = document.getElementById('calendar')
+          const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            height:'700px',
+            expandRows: true,
+            locale:'ko',
+            nowIndicator:true,
+            editable:true,
+            navLinks:true,
+            events: [
+                {
+                    title:'화성행궁 야간개방',
+                    start:'2024-05-03',
+                    end:'2024-10-27'
+                },{
+                    title:'경복궁 생과방',
+                    start:'2024-09-08',
+                    end:'2024-10-31'
+                }
+            ]
+            
+          });
+         
+          calendar.render()
+        });
+  
+      </script>
+</head>
+
+<body>
+    <div class="title_box">
+        <div><a href="index.html">고궁을 거닐다</a> </div> 
+     </div>
+     <div class="menu_box">
+         <ul class="menu">
+             <li><a href="portfolio_trable.html">여행장소</a></li>
+             <li><a href="portfolio_event.html">행사</a></li>
+             <li><a href="portfolio_map.html">여행지도</a></li>
+         </ul>
+     </div>
+    <div class="main_context_box">
+        <div class="tween_box">
+            <div class="clendar_box">
+                <div id='calendar'></div>
+            </div>
+           
+            <div class="eventlist_box">
+                <div class="event_list">
+                    <span class="list_title">행사 목록</span>
+                    <ul class="list">
+                        <li><p>04.11. ~ 06.12.</p><p>서울</p><p>창덕궁 달빛기행</p></li>
+                        <li><p>09.04. ~ 10.31.</p><p>서울</p><p>경복궁 생과방</p></li>
+                        <li><p>04.17. ~ 05.27.</p><p>서울</p><p>창경궁 야간전기</p></li>
+                        <li><p>05.03. ~ 10.27.</p><p>수원</p><p>화성행궁 야간개장</p></li>
+                    </ul>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 yeowonji </p>
+    </div>
+</body>
+</html>

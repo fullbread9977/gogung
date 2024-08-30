@@ -1,0 +1,415 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF_HambakSnow';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HambakSnow.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html,body {
+    height: 100%;
+    font-family: 'Pretendard-Regular';
+}
+
+form{
+    margin: 0px 230px 0px 230px;
+    height: 100%;
+    padding-top: 10px;
+    background-color: white;
+}
+
+li {
+    display: inline;
+    margin: 10px 30px 30px 10px;
+  
+}
+
+a{
+    color: black;
+    text-decoration: none;
+    word-break: keep-all;
+}
+
+a:visited {
+
+    text-decoration: none;
+}
+
+
+
+.title_box {
+    display: block;
+    background-color: white;
+    padding: 20px 40px 40px 20px;
+}
+
+
+/*현재는 사용 안하는 CSS
+ .profile_box{
+    width: 100%;
+    height: 7.5rem;
+    text-align: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+} 
+
+.profile_image_box{
+    display: inline-block;
+}
+
+.profile_image{
+    width: 5rem;
+    height: 7.5rem;
+}
+
+.profile_context_box{
+    display: inline-block;
+    position: absolute;
+    height: 7.5rem;
+}
+
+.profile_context{
+    position: relative;
+    padding: 0px 0px 0px 10px;
+    height: 7.5rem;
+    align-content: center;
+}
+*/
+
+
+
+.menu_box {
+    display: block;
+    text-align: center;
+    background-color: lightblue;
+    padding: 20px 0px 20px 0px;
+}
+
+.menu {
+    text-align: center;
+    word-break: keep-all;
+
+}
+
+.menu li {
+    font-weight: 600;
+    margin: 0px 40px 0px 40px;
+    
+}
+
+
+.menu a:hover {
+    color:white;
+}
+
+.back-img {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    z-index: 1;
+
+}
+
+.back-img::after{
+    margin-top:132px;/*배너+메뉴 높이만큼 아래로 지정*/
+    content:"";
+    height: 100%;
+    width: 100%;
+    background-repeat: repeat;
+    background-image: url("../image/korea-4936705_1920.jpg");
+    top:0;
+    left:0;
+    z-index: -1;
+    position:absolute;
+    opacity: 0.5;
+
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
+
+.back-img-context{
+    font-family:"SF_HambakSnow";
+    margin: 100px;
+    font-size:72px;
+    font-weight: 600;
+    z-index:5;
+    color:black;
+    display: inline-block;
+    word-break: keep-all;
+    position: relative;
+    animation: fadeInDown 1s;
+
+}
+
+.banner_box {
+    padding: 20px 40px 20px 40px;
+    display: block;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+}
+
+.banner_ele {
+    margin: 0px 0px 0px 30px;
+    padding:10px 0px 0px 0px;
+    height: 90px;
+    width: 220px;
+    border-radius: 5px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0px 0px 8px lightgray;
+    position: relative;
+    align-items: center;
+    
+}
+
+
+.banner_image{
+    display: inline-block;
+    height: 70px;
+    width:100px;
+    background-color: aqua;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+}
+
+#gyeongbokgung{
+    content: url("../image/경복궁_근정전_근정전 전체 전경(궁능유적본부).jpg");
+}
+
+#changduckgung{
+    content: url("../image/창덕궁_돈화문_돈화문 전경(궁능유적본부).jpg");
+}
+
+#changgyeonggung{
+    content: url("../image/창경궁_홍화문_홍화문(궁능유적본부).jpg");
+}
+
+#gyeonghuigung{
+    content: url("../image/gyeonghuigung.jpg");
+}
+
+#ducksugung{
+    content: url("../image/덕수궁_대한문_대한문 전경(궁능유적본부).jpg");
+}
+
+.add_btn{
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    border: 2px solid lightblue;
+    border-radius: 20px;
+    margin: 40px 0px 30px 0px;
+    cursor:pointer;
+    position: relative;
+}
+
+.add_btn::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -20px;
+    right: -20px;
+    background: transparent; 
+}
+
+.none{
+    display: none;
+}
+
+.footer{
+    content:"&copy; 2024 yeowonji";
+    color:#5a5a5a;
+    background-color: #f0f0f0;
+    height: 30px;
+    text-align: center;
+    align-items: center;
+    line-height: 30px;
+    bottom: 0;
+    
+}
+
+/*trable_page*/
+.main_context_box{
+    height: 100%;
+    width: 100%;
+    display: inline-table;
+    z-index: 1;
+    text-align: center;
+    
+}
+
+.main_context:nth-child(1){
+    padding: 60px 70px 10px 70px;
+}
+
+.main_context {
+    font-size: 0px;
+    padding: 10px 70px 10px 70px;
+
+}
+.context_link{
+    display: inline-block;
+}
+
+.location_li {
+    margin:10px 30px 30px 10px; 
+}
+
+.location_img {
+    height: 120px;
+    width:180px;
+
+}
+
+.location_context_box{
+    margin: 0px 0px 10px 0px;
+}
+
+.location_context{
+    font-size:16px;
+    display: block;
+}
+
+.location_selecter {
+    display: block;
+    text-align: left;
+    margin: 0px 0px 0px 215px;
+    padding: 10px 0px 10px 10px;
+    
+}
+
+.location_addr {
+    font-family: 'Pretendard-Regular';
+    font-size:16px;
+    width: 5rem;
+    height: 30px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 0px 10px 0px 10px;
+}
+.location_addr:focus{
+    outline: 1px solid lightblue;
+  
+}
+
+.location_addr option:hover {
+    background-color: lightblue;
+}
+
+/*event page*/
+.tween_box{
+    margin: 50px 100px 0px 100px;
+    display: flex;
+}
+
+.clendar_box{
+    width:50%;
+    
+}
+
+.eventlist_box{
+    background-color:white;
+    width:50%;
+    height:43.75rem
+}
+
+.event_list {
+    height: 100%;    
+    padding: 0px 0px 0px 20px;
+}
+
+.list_title {
+    display: block;
+    text-align: center;
+    font-size: 27px;
+    padding: 10px 10px 28px 10px;
+    border-bottom: 2px solid lightgrey;
+}
+
+.list {
+    word-break: keep-all;
+    display: block;
+}
+
+.list li {
+    display: flex;
+    padding: 20px 0px 20px 0px;
+    margin:  0px;
+    border-bottom: 1px solid #f0f0f0;
+    
+}
+
+.list li p {
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+}
+.list li p:nth-last-child(1){
+    text-align: left;
+    width: 60%;
+}
+/*map page*/
+#map{
+    width:80%;
+    height:86%; 
+    float: left;
+}
+
+.locationlist_box {
+    background-color:white;
+    width:20%;
+    height:43.75rem
+}
+
+.location_list {
+    height: 100%;    
+    padding: 0px 10px 0px 10px;
+}
+
+.location_title{
+    display: block;
+    text-align: center;
+    font-size: 27px;
+    padding: 10px 10px 28px 10px;
+    border-bottom: 2px solid lightgrey;
+}
+
+
+
+
+@media (min-width:768px) and (max-width:1023px) {
+    .location_img{
+        height:180px;
+        width: 240px;
+        
+    }
+}
+
+@media (min-width:359px) and (max-width:767px) {
+        .location_img{
+            height:240px;
+            width: 300px;
+            
+        }
+}

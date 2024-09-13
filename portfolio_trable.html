@@ -8,22 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./CSS/portfolio.css">
     <script src="./JS/json.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const addButton = document.querySelector(".add_btn");
-    const lists = document.querySelectorAll(".main_context");
-    let currentVisibleIndex = 0;
 
-    addButton.addEventListener("click", function() {
-        if (currentVisibleIndex < lists.length) {
-            lists[currentVisibleIndex].classList.remove("none");
-            currentVisibleIndex++;
-        } else {
-            // 모든 리스트가 보이면 버튼을 비활성화하거나 메시지를 변경할 수 있음
-            addButton.textContent = "더보기";
-            addButton.disabled = false;
-        }
-    });
-});
     </script>
 </head>
 <body>
@@ -60,12 +45,47 @@
         <!--맨 밑에 더보기 버튼 추가-->
        
 
-        <p class="add_btn">더보기</p>
+        <p class="add_btn" id="add_btn" >더보기</p>
         
     </form>
      </div>
      <div class="footer">
         <p>&copy; 2024 yeowonji </p>
      </div>
+     <script>
+
+    
+            document.addEventListener("DOMContentLoaded", function() {
+                const addButton = document.querySelector(".add_btn");
+                let currentVisibleIndex = 0;
+
+                // 더보기 버튼 클릭 이벤트
+                addButton.addEventListener("click", function() {
+                    const lists = document.querySelectorAll(".main_context.none"); // 현재 'none' 클래스를 가진 요소들만 선택
+
+                    if (currentVisibleIndex <= lists.length) {
+                        lists[currentVisibleIndex].classList.remove("none");
+                        currentVisibleIndex++;
+                    } else {
+                        // 모든 리스트가 보이면 버튼을 숨기거나 메시지를 변경
+                        addButton.textContent = "더보기";
+                        addButton.disabled = true;
+                    }
+                    });
+                
+                    
+
+            });
+                   
+            var select_location = document.querySelector('.location_addr');
+            select_location.addEventListener('change',function(){
+                    var idx = select_location.selectedIndex; 
+                    var location = select_location.options[idx].value;
+                    console.log(location);
+                });
+           
+  
+
+     </script>
 </body>
 </html>

@@ -21,6 +21,7 @@ let url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${s
     &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
     &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}`;
 
+
 //개행문자가 섞여 호출이 제대로 안되어 개행문자 제거
 url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
 
@@ -32,57 +33,83 @@ serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_ty
 */
 //console.log(url);
 
-//XML 요청
 
 
-//JSON api 요청, string 용량이 너무 커져서 XML로 교체
+/* 선택한 지역으로 API 설정 */
 
-//데이터 push
-//var responseData =[];
 
-//stringify에서 string이 너무 많이 생성되어 용량이 커져 오류남 다른 코드로 리펙토링 필요
+
+//var select = select_location.options[select_location.selectedIndex].value;
+
+
+
 
 /*API요청*/
-
-
 fetch(url)
     .then(res => res.json())
     .then(data => {
         var result = data.response.body.items.item;
-        var html_list = ' ';
-        
+
+        /*리스트 요소 생성*/
+
+        var main_context = document.querySelector("#main_context_box");
+
+
         for(var i=0; i < result.length; i++){
-            //ul
-        console.log(i);
-        if(i%5==0){
-            html_list += `<ul class="main_context ${(i>20)?'none':''}"> `;
-        }
-            html_list +=`<li class="location_li">
-                          <a href="" class="context_link">
-                           <img src="${result[i].firstimage ? result[i].firstimage : " "}" class="location_img ${result[i].firstimage ? " " : "non-image"}"/>
-                            <div class="location_context_box">
-                             <span class="location_context">${ title_set = result[i].title ? result[i].title : "non-title"}</span>
-                             <span class="location_context"></span>
-                            </div>
-                          </a>
-                        </li>`;
-        if(i%5==4){
-            html_list += `</ul> `;
-        }
 
+            /*리스트 요소 생성*/
+            if(i%4==0){
+            var ul_list = document.createElement("ul");
+            ul_list.setAttribute("class", `main_context ${(i>20)? "none": "" }`);
+            }
+
+            var li_list = document.createElement("li");
+            li_list.setAttribute("class","location_li");
+
+            var a_link = document.createElement("a");
+            a_link.setAttribute("class","context_link"); 
+            a_link.setAttribute("href", "#"); //나중에 링크 삽입
+
+
+            var img_ele = document.createElement("img");
+            img_ele.setAttribute("class","location_img");
+
+            //이미지 데이터 여부판단, 없으면 class에 non-image 추가
+            if(result[i].firstimage){
+
+                img_ele.src = result[i].firstimage;
+
+            }else{
+
+                img_ele.classList.add("non-image");
+            }
+           
+
+            var div_ele = document.createElement("div");
+            div_ele.setAttribute("class","location_context_box");
+
+            var span_ele = document.createElement("span");
+            span_ele.setAttribute("class","location_context");
+            span_ele.textContent =  (result[i].title)? result[i].title : "non-title";
+         
+
+            
+            div_ele.appendChild(span_ele);
+            a_link.appendChild(img_ele);
+            a_link.appendChild(div_ele);
+            li_list.appendChild(a_link);
+            ul_list.appendChild(li_list);
+            main_context.appendChild(ul_list);
+
+            
         }
         
         
-
-        document.getElementById("main_context_box").innerHTML = html_list ; 
+        
     })
     .catch((error)=>console.log(error)); 
 
 
-
-//결과값 불러오기, html에 실행해서 확인가능
-
-console.log();
 
 
 

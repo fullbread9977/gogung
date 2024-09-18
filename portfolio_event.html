@@ -15,12 +15,17 @@
         document.addEventListener('DOMContentLoaded', function() {
           const calendarEl = document.getElementById('calendar')
           const calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar:{
+                left:'prev,next,today',
+                center:'title',
+                right:'dayGridMonth,timeGridWeek,timeGridDay'
+            },
             initialView: 'dayGridMonth',
             height:'700px',
             expandRows: true,
             locale:'ko',
             nowIndicator:true,
-            editable:true,
+            editable:false,//수정가능여부
             navLinks:true,
             events: [
                 {

@@ -2,22 +2,30 @@
 //https://velog.io/@rks852/open-API-%EB%A1%9C-%ED%95%84%EC%9A%94%ED%95%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%80%EA%B3%B5%ED%95%98%EA%B8%B0-Node.js-XML-JSON-Postman
 
 
-/*API 요청 파라미터*/
-let api_type = 'areaBasedSyncList1';
-let serviceKey = 'ZhtsUt4Ys4qGfZI5%2FCZlZkYc%2B1SUIGFWvRvDB%2B9OdUvnjWEU1EXclqwEuGsloJ3l74GAEK73h137%2BZxxip8H5Q%3D%3D';
-let MobileApp = 'AppTest';
-let MobileOS = 'ETC';
-let _type = 'json';
-let showflag = 1;
-let numOfRows = 100;
-let listYN = 'Y';
-let pageNo = '1';
-let arrange = 'A';
-let contentTypeId = 12;
-let cat1 = 'A02';
-let cat2 = 'A0201';
-let cat3 = 'A02010100';
-let url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
+/*요청 데이터 API 주소 설정 */ 
+var api_type = 'areaBasedSyncList1';
+
+/*한국 관광공사 API 필수 파라미터*/
+var serviceKey = 'ZhtsUt4Ys4qGfZI5%2FCZlZkYc%2B1SUIGFWvRvDB%2B9OdUvnjWEU1EXclqwEuGsloJ3l74GAEK73h137%2BZxxip8H5Q%3D%3D';
+var MobileApp = 'AppTest';
+var MobileOS = 'ETC';
+var _type = 'json';
+
+
+/*고궁 전체 리스트 API 요청 파라미터*/
+var showflag = 1;
+var numOfRows = 100;
+var listYN = 'Y';
+var pageNo = '1';
+var arrange = 'A';
+var contentTypeId = 12;
+var cat1 = 'A02';
+var cat2 = 'A0201';
+var cat3 = 'A02010100';
+var areaCode = 'a'; //추후 지역코드 요청 들어오면 입력되게 수정
+
+
+var url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
     &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
     &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}`;
 
@@ -35,16 +43,10 @@ serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_ty
 
 
 
-/* 선택한 지역으로 API 설정 */
-
-
-
 //var select = select_location.options[select_location.selectedIndex].value;
 
 
-
-
-/*API요청*/
+/*고궁 전체 지역 API요청*/
 fetch(url)
     .then(res => res.json())
     .then(data => {
@@ -57,7 +59,7 @@ fetch(url)
 
         for(var i=0; i < result.length; i++){
 
-            /*리스트 요소 생성*/
+            /*리스트 요소 생성, 리스트 4개씩 묶음, obj 20개 이상부터 none 태그로 리스트 숨김 */
             if(i%4==0){
             var ul_list = document.createElement("ul");
             ul_list.setAttribute("class", `main_context ${(i>20)? "none": "" }`);
@@ -111,8 +113,7 @@ fetch(url)
 
 
 
-
-
+ 
 
 
 

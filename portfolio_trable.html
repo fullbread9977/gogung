@@ -57,8 +57,10 @@
                 
                 for(const item of areaCode){
                     var option = document.createElement("option");
+                    var link = document.createElement("link");
                     option.value = item.code;
                     option.text = item.area;
+                    
                     select.appendChild(option);
                 }
                 select_box.appendChild(select);

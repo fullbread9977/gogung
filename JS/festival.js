@@ -20,7 +20,7 @@ month = (month.length == 1)? month.padStart(2,"0") : month;
 var day = today.getDate().toString();
 
 
-/*고궁 전체 리스트 API 요청 파라미터*/
+/*행사 리스트 API 요청 파라미터*/
 
 var numOfRows = 300;
 var listYN = 'Y';
@@ -31,27 +31,43 @@ var eventStartDate = year+month+day; //필수
 //eventStartDate ='20240901';
 //console.log(eventStartDate);
 
-var url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&eventStartDate=${eventStartDate}&numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}`;
+var url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}
+            &eventStartDate=${eventStartDate}&numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}`;
 
 
 //개행문자가 섞여 호출이 제대로 안되어 개행문자 제거
+url = url.replace(/\s*/g,"");
 url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
 
 console.log(url);
 
 
-/*고궁 전체 지역 API요청*/
+/*행사 API요청*/
 
     fetch(url)
     .then(res => res.json())
     .then(data => {
         var result = data.response.body.items.item;
-        //console.log(result);
-        //원하는 코드 종류가 일치한 것만 담기
+       
+        //원하는 행사 코드, 상시 행사 날짜 필터링
         let fastivalCode = ["A02070100","A0207200","A02080100","A02080200","A02080500","A02081300","A02080600"];
-        result = result.filter((data)=> fastivalCode.includes(data["cat3"]));
-   
+        result = result.filter((data)=> (fastivalCode.includes(data["cat3"])||data["cat1"]!= undefined )&& ( "20240901" < data.eventstartdate) );
+        
+        //이벤트 시작기간으로 오름차순 정렬
+        result = result.sort((a, b)=> a.eventstartdate - b.eventstartdate);
+
+        //HTML 리스트 요소 생성
         Eventlist(result);
+
+        //로컬스토리지에 저장해야하는 달력에 표시할 데이터 로직 추가필요
+        /* 담아야하는 형식
+             {
+                    title:'화성행궁 야간개방',
+                    start:'2024-05-03',
+                    end:'2024-10-27'
+                }
+
+        */
         
 
         
@@ -61,25 +77,24 @@ console.log(url);
 
 
 
-var startDate = new Date('20240901');
-var startDate = new Date('20240930');
+
 
 //fetchDataForDate(startDate);
 
 
 function Eventlist(result){
-
     var ul_set = document.querySelector(".list");
     ul_set.innerHTML = '';
 
-    for(var i=0;  i < result.lenght; i++){
+    for(var i=0;  i < result.length; i++){
+        
         var list_set = document.createElement("li");
         var p_set_Sd = document.createElement("p");
         var p_set_Ed = document.createElement("p");
         var p_set_Ti = document.createElement("p");
         
-        p_set_Sd.append(result[i].eventstartdate);
-        p_set_Ed.append(result[i].eventenddate);
+        p_set_Sd.append(result[i].eventstartdate.replace(/\s*/g,"")+" ~ "+result[i].eventenddate.replace(/\s*/g,""));
+        p_set_Ed.append(result[i].addr1.split(/\s+/g).slice(0,2).join(' '));
         p_set_Ti.append(result[i].title);
 
 
@@ -88,12 +103,12 @@ function Eventlist(result){
         list_set.appendChild(p_set_Ti);
 
         ul_set.appendChild(list_set);
-
+        
     }
+
 
 }
 
  
-
 
 

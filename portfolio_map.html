@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6aa58c481eefac0d5737e2522542f690&libraries=services&autoload=false"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6aa58c481eefac0d5737e2522542f690&libraries=services"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        #placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-    </style>
+   
+   
 
     <title>고궁 지도</title>
     <link rel="stylesheet" type="text/css" href="./CSS/Reset.css">
@@ -26,51 +25,34 @@
             <li><a href="portfolio_map.html">여행지도</a></li>
         </ul>
     </div>
-   
-    <div class="locationlist_box" style="width: 20%; padding:0px; float: left;">
+
+    <div class="locationlist_box" style="z-index:999 !important;">
         <div class="location_list">
-            <span class="location_title">주변 고궁</span>
-            <form onsubmit="searchPlaces(); return false;" style="margin: 0px; padding: 0px;" id="submitBtn">
-                키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
-                <button type="submit">검색하기</button> 
+            <span class="location_title">주변 고궁 찾기</span>
+            <form onsubmit="searchPlaces(); return false;" style="margin:0; height:auto; ">
+                <input type="text" value="창덕궁" id="keyword" size="15">
+                <input type="submit" value="검색하기"/>
             </form>
             <ul id="placesList"></ul>
             <div id="pagination"></div>
+            
             <ul class="list">
-                <li><p style="font-weight:600;">경복궁</p><p style="color:#9d9d9d;">궁궐</p><p>서울 종로구 사직로 161</p></li>
-                <li><p style="font-weight:600;">창덕궁</p><p style="color:#9d9d9d;">궁궐</p><p>서울특별시 종로구 율곡로 99</p></li>
-                <li><p style="font-weight:600;">창경궁</p><p style="color:#9d9d9d;">궁궐</p><p>서울특별시 종로구 창경궁로 185</p></li>
-                <li><p style="font-weight:600;">경희궁</p><p style="color:#9d9d9d;">궁궐</p><p>서울특별시 종로구 새문안로 45</p></li>
-                <li><p style="font-weight:600;">덕수궁</p><p style="color:#9d9d9d;">궁궐</p><p>서울특별시 중구 세종대로 99</p></li>
+            <!-- 리스트 결과 출력-->    
             </ul>
         </div>
+        <div class="togle_box">
+            <input type="button" id="list_togle" onclick="on_off()" value="열기"/>
+        </div>
     </div>
-    <div id="map" ></div>
-    
+
+    <div id="map" >
+    </div>
+   
     <script type="text/javascript">
-        document.getElementById('submitBtn').addEventListener('click', function(event) {
-            event.preventDefault();  // 기본 동작 방지 (새로고침 방지 등)
-        });
-        //먼저 로드되서 오류나므로 동적으로 추가필요
-        kakao.maps.load(()=>{
-        /*
-        var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(37.577599, 126.976928),
-            
-			level: 5
-		};
-
-		var map = new kakao.maps.Map(container, options);
-        var markerPosition = new kakao.maps.LatLng(37.577599, 126.976928);
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
-        marker.setMap(map);
-        */
-
-        // 마커를 담을 배열입니다
-var markers = [];
+        
+        //먼저 로드되서 오류나므로 동적으로 로드되게끔 지도 그리는 코드를 안에 작성
+kakao.maps.load(()=>{
+            var markers = [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -132,7 +114,7 @@ function placesSearchCB(data, status, pagination) {
 function displayPlaces(places) {
 
     var listEl = document.getElementById('placesList'), 
-    menuEl = document.getElementById('menu_wrap'),
+    menuEl = document.getElementsByClassName('location_list'),
     fragment = document.createDocumentFragment(), 
     bounds = new kakao.maps.LatLngBounds(), 
     listStr = '';
@@ -270,23 +252,23 @@ function displayPagination(pagination) {
     paginationEl.appendChild(fragment);
 }
 
-    // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-    // 인포윈도우에 장소명을 표시합니다
-    function displayInfowindow(marker, title) {
-        var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
-        infowindow.setContent(content);
-        infowindow.open(map, marker);
-    }
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
 
-    // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-    function removeAllChildNods(el) {   
-        while (el.hasChildNodes()) {
-            el.removeChild (el.lastChild);
-        }
+ // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
     }
-    });
-    
+}
+});       
+        
 	</script>
 </body>
 </html>

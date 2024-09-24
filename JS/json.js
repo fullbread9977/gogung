@@ -22,12 +22,13 @@ var contentTypeId = 12;
 var cat1 = 'A02';
 var cat2 = 'A0201';
 var cat3 = 'A02010100';
-var areaCode = '0'; //추후 지역코드 요청 들어오면 입력되게 수정
+var areaCode = '0'; 
 
 var url;
 
 /*select 값 선택했는지 체크*/
 function getDataFrom(){
+    //event.html에서 선택한 value값 불러오기 (브라우저에서만 작동)
     var LocationCode = localStorage.getItem('selectValue');
     LocationCode = parseFloat(LocationCode); 
     
@@ -51,14 +52,14 @@ function Set_apipath(LocationCode){
   
     if(LocationCode === '0'){
         //전체 선택시, 지역 파라미터 제외한 API로 호출
-            url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
+            url = `https://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
             &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
             &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}`;
                 console.log('전체 선택 체크');        
                 
     }else{
         //특정 지역 선택 시, 지역코드 추가한 API로 호출
-        url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
+        url = `https://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
                 &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
                 &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}&areaCode=${LocationCode}`;
             console.log('지역코드 선택 체크');
@@ -111,10 +112,6 @@ function getAPI() {
 
 }
 
-function Main_reset(){
-    var main_context = document.querySelector("#main_context_box");
-    main_context.innerHTML = '';
-}
 
 /*리스트 요소 생성*/
 function Create_LocationList(result){
@@ -169,7 +166,6 @@ function Create_LocationList(result){
         
     }
 }
-
 
 
 

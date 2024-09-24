@@ -31,7 +31,7 @@ var eventStartDate = year+month+day; //필수
 //eventStartDate ='20240901';
 //console.log(eventStartDate);
 
-var url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}
+var url = `https://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}
             &eventStartDate=${eventStartDate}&numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}`;
 
 

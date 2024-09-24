@@ -27,7 +27,7 @@
         <div class="location_selecter">
 
         </div>
-
+      
         <div id="main_context_box">
             <!-- 이 영역에 고궁 리스트가 들어온다-->
         </div>
@@ -35,39 +35,45 @@
 
         <p class="add_btn" id="add_btn" >더보기</p>
         
-    </form>
+        </form>
      </div>
      <div class="footer">
         <p>&copy; 2024 yeowonji </p>
      </div>
      <script>
+        /*지역 선택 코드 생성*/
+          //국토관광부와 코드가 같지도 않으면서 왜 제공하는 지역코드에 시/도 대분류 코드 안주는 지 모르겠음 ㄱ-
+        var areaCode = [{'area':'전체','code':0},{'area':'서울','code':1},{'area':'부산','code':6},{'area':'대구','code':4},{'area':'인천','code':2},
+                        {'area':'광주','code':5},{'area':'대전','code':3},{'area':'울산','code':7},{'area':'세종','code':8},{'area':'경기','code':31},
+                        {'area':'강원','code':32},{'area':'충북','code':33},{'area':'충남','code':34},{'area':'경북','code':35},{'area':'경남','code':36},
+                        {'area':'전북','code':37},{'area':'전남','code':38},{'area':'제주','code':39}];
+            
 
+        var select_box = document.querySelector('.location_selecter');
+        var select = document.createElement("select");
+            select.setAttribute("class","location_addr");
+                    
+            select.setAttribute("onchange","handleSelectChange()");
+                    
+
+        for(const item of areaCode){
+
+            var option = document.createElement("option");
+                option.value = item.code;
+                option.text = item.area;
+                    
+                select.appendChild(option);
+                        
+
+            }
+            select_box.appendChild(select);
+                        
+            console.log(select_box);
     
+        /*document 완전히 로드 후 실행되는 이벤트*/
             document.addEventListener("DOMContentLoaded", function() {
 
-                //국토관광부와 코드가 같지도 않으면서 왜 제공하는 지역코드에 시/도 대분류 코드 안주는 지 모르겠음 ㄱ-
-                var areaCode = [{'area':'전체','code':0},{'area':'서울','code':1},{'area':'부산','code':6},{'area':'대구','code':4},{'area':'인천','code':2},
-                                {'area':'광주','code':5},{'area':'대전','code':3},{'area':'울산','code':7},{'area':'세종','code':8},{'area':'경기','code':31},
-                                {'area':'강원','code':32},{'area':'충북','code':33},{'area':'충남','code':34},{'area':'경북','code':35},{'area':'경남','code':36},
-                                {'area':'전북','code':37},{'area':'전남','code':38},{'area':'제주','code':39}];
-            
-                var select_box = document.querySelector('.location_selecter');
-                var select = document.createElement("select");
-                    select.setAttribute("class","location_addr");
                 
-                for(const item of areaCode){
-                    var option = document.createElement("option");
-                    var link = document.createElement("link");
-                    option.value = item.code;
-                    option.text = item.area;
-                    
-                    select.appendChild(option);
-                }
-                select_box.appendChild(select);
-                    
-                    console.log(select_box);
-
-
                 const addButton = document.querySelector(".add_btn");
                 let currentVisibleIndex = 0;
 
@@ -84,11 +90,10 @@
                         addButton.disabled = true;
                     }
                     });
-                
-                    
-
+            
+                  
             });
-               
+          
             /*
             var select_location = document.querySelector('.location_addr');
             select_location.addEventListener('change',function(){
@@ -96,10 +101,22 @@
                     var location = select_location.options[idx].value;
                     console.log(location);
                 });
-           */
-          document.get
-  
+           */         
 
+           function handleSelectChange(){
+                    const selectVal = document.querySelector('.location_addr');            
+                        var idx = selectVal.selectedIndex;
+                        var locations = selectVal.options[idx].value;
+
+                        localStorage.setItem('selectValue',locations);
+                        console.log("선택된 데이터 value 값:",locations);
+                        
+                        getDataFrom();
+                    
+                }
+               
+            
      </script>
+
 </body>
 </html>

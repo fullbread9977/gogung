@@ -12,51 +12,88 @@ var MobileOS = 'ETC';
 var _type = 'json';
 
 
+/* 날짜 셋팅 */
+var today = new Date();
+var year = today.getFullYear().toString();
+var month = (1+today.getMonth()).toString();
+month = (month.length == 1)? month.padStart(2,"0") : month;
+var day = today.getDate().toString();
+
+
 /*고궁 전체 리스트 API 요청 파라미터*/
 
-var numOfRows = 100;
+var numOfRows = 300;
 var listYN = 'Y';
 var pageNo = '1';
 var arrange = 'A';
-var eventStartDate = '20240922';
+var eventStartDate = year+month+day; //필수
 
+//eventStartDate ='20240901';
+//console.log(eventStartDate);
 
 var url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&eventStartDate=${eventStartDate}&numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}`;
 
 
 //개행문자가 섞여 호출이 제대로 안되어 개행문자 제거
-//url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
+url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
 
-
-/*
-serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
-    &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
-    &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}
-*/
 console.log(url);
 
 
-
-//var select = select_location.options[select_location.selectedIndex].value;
-
-
-
-
 /*고궁 전체 지역 API요청*/
-fetch(url)
+
+    fetch(url)
     .then(res => res.json())
     .then(data => {
         var result = data.response.body.items.item;
+        //console.log(result);
+        //원하는 코드 종류가 일치한 것만 담기
+        let fastivalCode = ["A02070100","A0207200","A02080100","A02080200","A02080500","A02081300","A02080600"];
+        result = result.filter((data)=> fastivalCode.includes(data["cat3"]));
+   
+        Eventlist(result);
+        
 
-        console.log(result);
         
     })
-    .catch((error)=>{
+    .catch((error)=>
+        console.log(error)); 
+
+
+
+var startDate = new Date('20240901');
+var startDate = new Date('20240930');
+
+//fetchDataForDate(startDate);
+
+
+function Eventlist(result){
+
+    var ul_set = document.querySelector(".list");
+    ul_set.innerHTML = '';
+
+    for(var i=0;  i < result.lenght; i++){
+        var list_set = document.createElement("li");
+        var p_set_Sd = document.createElement("p");
+        var p_set_Ed = document.createElement("p");
+        var p_set_Ti = document.createElement("p");
         
-        console.log(error);
-    }); 
+        p_set_Sd.append(result[i].eventstartdate);
+        p_set_Ed.append(result[i].eventenddate);
+        p_set_Ti.append(result[i].title);
 
 
+        list_set.appendChild(p_set_Sd);
+        list_set.appendChild(p_set_Ed);
+        list_set.appendChild(p_set_Ti);
+
+        ul_set.appendChild(list_set);
+
+    }
+
+}
+
+ 
 
 
 

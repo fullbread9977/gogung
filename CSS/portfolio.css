@@ -315,6 +315,11 @@ a:visited {
 .list {
     word-break: keep-all;
     display: block;
+    height: 600px;
+    min-width: 360px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
 }
 
 .list li {
@@ -327,12 +332,12 @@ a:visited {
 
 .list li p {
     display: inline-block;
-    width: 20%;
+    width: 30%;
     text-align: center;
 }
 .list li p:nth-last-child(1){
     text-align: left;
-    width: 60%;
+    width: 50%;
 }
 /*map page*/
 #map{

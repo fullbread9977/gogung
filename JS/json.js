@@ -24,33 +24,103 @@ var cat2 = 'A0201';
 var cat3 = 'A02010100';
 var areaCode = '0'; //추후 지역코드 요청 들어오면 입력되게 수정
 
+var url;
+
+/*select 값 선택했는지 체크*/
+function getDataFrom(){
+    var LocationCode = localStorage.getItem('selectValue');
+    LocationCode = parseFloat(LocationCode); 
+    
+    //값 체크, 설정 안되어 있으면 전국 고궁 불러오기로 설정
+    if(!LocationCode){
+        Set_apipath('0'); 
+        console.log('전체 또는 코드 선택안함 체크');
+                   
+    }else{
+        Set_apipath(LocationCode);
+        console.log('데이터 저장 불러오기:',LocationCode);
+        }
+    
+        getAPI();
+}
+            
+getDataFrom();
 
 
-var url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
-    &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
-    &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}`;
+function Set_apipath(LocationCode){
+  
+    if(LocationCode === '0'){
+        //전체 선택시, 지역 파라미터 제외한 API로 호출
+            url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
+            &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
+            &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}`;
+                console.log('전체 선택 체크');        
+                
+    }else{
+        //특정 지역 선택 시, 지역코드 추가한 API로 호출
+        url = `http://apis.data.go.kr/B551011/KorService1/${api_type}?serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
+                &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
+                &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}&areaCode=${LocationCode}`;
+            console.log('지역코드 선택 체크');
+               
+               
+    }
 
+    //개행문자가 섞여 호출이 제대로 안되어 공백,개행문자 제거
+    url = url.replace(/\s*/g,"");
+    url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
 
+    console.log('호출한 API',url);
+    localStorage.removeItem('selectValue');
+}
 
+/*고궁 전체 지역 API요청*/
+function getAPI() {
+    fetch(url)
+    .then(res => res.json())
+    .then(data => {
+        var result = data.response.body.items.item;
+        if(data.response.body.totalCount > 0){
+                /*리스트 요소 생성*/
+                Create_LocationList(result);
 
-//개행문자가 섞여 호출이 제대로 안되어 개행문자 제거
-url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
+        }else{
+            var main_context = document.querySelector("#main_context_box");
+            main_context.innerHTML = '';
+            
+            
+            var in_span = document.createElement('span');
+            in_span.textContent = "선택한 지역에서 고궁을 찾을 수 없습니다.";
+            main_context.appendChild(in_span); 
 
+        }
 
+        
+    })
+    .catch((error)=> {
+        console.log(error);
+        var main_context = document.querySelector("#main_context_box");
+        main_context.innerHTML = '';
+        
+        var in_span = document.createElement('span');
+        in_span.textContent = "오류 입니다. 관리자에게 문의해주세요!";
 
+        main_context.appendChild(in_span); 
 
-/*
-serviceKey=${serviceKey}&MobileApp=${MobileApp}&MobileOS=${MobileOS}&_type=${_type}&showflag=${showflag}
-    &numOfRows=${numOfRows}&listYN=${listYN}&pageNo=${pageNo}&arrange=${arrange}&contentTypeId=${contentTypeId}
-    &cat1=${cat1}&cat2=${cat2}&cat3=${cat3}
-*/
-//console.log(url);
+    }); 
 
+}
+
+function Main_reset(){
+    var main_context = document.querySelector("#main_context_box");
+    main_context.innerHTML = '';
+}
 
 /*리스트 요소 생성*/
 function Create_LocationList(result){
     var main_context = document.querySelector("#main_context_box");
-    
+    main_context.innerHTML = '';
+
     for(var i=0; i < result.length; i++){
 
         /*리스트 요소 생성, 리스트 4개씩 묶음, obj 20개 이상부터 none 태그로 리스트 숨김 */
@@ -76,7 +146,6 @@ function Create_LocationList(result){
             img_ele.src = result[i].firstimage;
 
         }else{
-
             img_ele.classList.add("non-image");
         }
        
@@ -102,21 +171,11 @@ function Create_LocationList(result){
 }
 
 
-/*고궁 전체 지역 API요청*/
-fetch(url)
-    .then(res => res.json())
-    .then(data => {
-        var result = data.response.body.items.item;
-
-        /*리스트 요소 생성*/
-        Create_LocationList(result);
-        
-    })
-    .catch((error)=>console.log(error)); 
 
 
 
- 
+
+
 
 
 

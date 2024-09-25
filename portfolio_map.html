@@ -26,7 +26,8 @@
         </ul>
     </div>
 
-    <div class="locationlist_box" style="z-index:999 !important;">
+    <div class="locationlist_box" style="width: 20%; padding:0px; float: left;">
+
         <div class="location_list">
             <span class="location_title">주변 고궁 찾기</span>
             <form onsubmit="searchPlaces(); return false;" style="margin:0; height:auto; ">
@@ -37,12 +38,13 @@
             <div id="pagination"></div>
             
             <ul class="list">
-            <!-- 리스트 결과 출력-->    
+            <!--리스트 결과 출력-->  
             </ul>
         </div>
-        <div class="togle_box">
-            <input type="button" id="list_togle" onclick="on_off()" value="열기"/>
-        </div>
+    </div>
+    <div id="map" ></div>
+    
+        
     </div>
 
     <div id="map" >

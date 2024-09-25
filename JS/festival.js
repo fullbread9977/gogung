@@ -41,6 +41,12 @@ url = url.replace(/(\r\n\t|\n|\r\t)/gm,"");
 
 console.log(url);
 
+function formatDate(date){
+    //API 날짜 형식변환
+    date = date.slice(0,4)+"-"+date.slice(4);
+    date = date.date = date.slice(0,7)+"-"+date.slice(7);
+    return date;
+} 
 
 /*행사 API요청*/
 
@@ -51,7 +57,7 @@ console.log(url);
        
         //원하는 행사 코드, 상시 행사 날짜 필터링
         let fastivalCode = ["A02070100","A0207200","A02080100","A02080200","A02080500","A02081300","A02080600"];
-        result = result.filter((data)=> (fastivalCode.includes(data["cat3"])||data["cat1"]!= undefined )&& ( "20240901" < data.eventstartdate) );
+        result = result.filter((data)=> (fastivalCode.includes(data["cat3"])||data["cat1"]!= undefined )&& ( "20240901" <= data.eventstartdate)&&("20240931" >= data.eventstartdate)  );
         
         //이벤트 시작기간으로 오름차순 정렬
         result = result.sort((a, b)=> a.eventstartdate - b.eventstartdate);
@@ -68,18 +74,23 @@ console.log(url);
                 }
 
         */
+       var events= [];
+
+       for(let i =0; i < result.length; i++){  
+            events.push({
+                'title': result[i].title,
+                'start': formatDate(result[i].eventstartdate),
+                'end': formatDate(result[i].eventenddate)
+            });
+        }
+        console.log(events);
+       localStorage.setItem('events',JSON.stringify(events));
         
 
         
     })
     .catch((error)=>
         console.log(error)); 
-
-
-
-
-
-//fetchDataForDate(startDate);
 
 
 function Eventlist(result){
@@ -93,7 +104,7 @@ function Eventlist(result){
         var p_set_Ed = document.createElement("p");
         var p_set_Ti = document.createElement("p");
         
-        p_set_Sd.append(result[i].eventstartdate.replace(/\s*/g,"")+" ~ "+result[i].eventenddate.replace(/\s*/g,""));
+        p_set_Sd.append(formatDate(result[i].eventstartdate.replace(/\s*/g,""))+" ~ "+formatDate(result[i].eventenddate.replace(/\s*/g,"")));
         p_set_Ed.append(result[i].addr1.split(/\s+/g).slice(0,2).join(' '));
         p_set_Ti.append(result[i].title);
 
@@ -110,5 +121,4 @@ function Eventlist(result){
 }
 
  
-
 

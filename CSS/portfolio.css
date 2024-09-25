@@ -214,6 +214,10 @@ a:visited {
 }
 
 /*trable_page*/
+.non-image {
+    background-image: url("../image/Non-Image.png");
+}
+
 .main_context_box{
     height: 100%;
     width: 100%;

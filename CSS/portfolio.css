@@ -214,10 +214,6 @@ a:visited {
 }
 
 /*trable_page*/
-.non-image {
-    content: url("../image/Non-Image.png");
-}
-
 .main_context_box{
     height: 100%;
     width: 100%;
@@ -410,6 +406,22 @@ span.jibun.gray {
     background: blanchedalmond;
 }
 
+input#keyword {
+    padding: 5px 7px;
+    width: 90%;
+}
+
+input[type="submit"]{
+    padding: 5px 10px 5px 10px;
+    background-color: aliceblue;
+    outline: none;
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+.non-image {
+    content: url("../image/Non-Image.png");
+}
 
 @media (min-width:768px) and (max-width:1023px) {
     .location_img{

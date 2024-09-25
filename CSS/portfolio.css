@@ -215,7 +215,7 @@ a:visited {
 
 /*trable_page*/
 .non-image {
-    background-image: url("../image/Non-Image.png");
+    content: url("../image/Non-Image.png");
 }
 
 .main_context_box{

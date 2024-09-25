@@ -89,8 +89,17 @@ function formatDate(date){
 
         
     })
-    .catch((error)=>
-        console.log(error)); 
+    .catch((error)=>{
+        console.log(error);
+
+        var main_context = document.querySelector("#main_context_box");
+        main_context.innerHTML = '';
+        
+        var in_span = document.createElement('span');
+        in_span.textContent = "오류 입니다. 관리자에게 문의해주세요!";
+
+        main_context.appendChild(in_span); 
+    }); 
 
 
 function Eventlist(result){

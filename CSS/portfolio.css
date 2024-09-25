@@ -351,6 +351,11 @@ a:visited {
     width:20%;
     height:43.75rem
 }
+#placesList{
+    overflow-x: auto; 
+    max-height:600px;
+}
+
 
 .location_list {
     height: 100%;    

@@ -12,6 +12,11 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
     <script src="./JS/festival.js"></script>
     <script>
+        var eventData = localStorage.getItem('events');
+        eventData = JSON.parse(eventData);
+        console.log(eventData);
+
+
         //참고 사이트 https://nowonbun.tistory.com/368
         document.addEventListener('DOMContentLoaded', function() {
           const calendarEl = document.getElementById('calendar')
@@ -28,23 +33,13 @@
             nowIndicator:true,
             editable:false,//수정가능여부
             navLinks:true,
-            events: [
-                {
-                    title:'화성행궁 야간개방',
-                    start:'2024-05-03',
-                    end:'2024-10-27'
-                },{
-                    title:'경복궁 생과방',
-                    start:'2024-09-08',
-                    end:'2024-10-31'
-                }
-            ]
+            events:eventData
             
           });
          
           calendar.render()
         });
-  
+        
       </script>
 
 </head>
